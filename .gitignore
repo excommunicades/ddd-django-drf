@@ -1,0 +1,77 @@
+DDD-description.txt
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+*.db
+*.sqlite3
+*.log
+
+# Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+media/
+static/
+*.env
+*.env.*
+*.venv
+*.vscode/
+.idea/
+*.egg-info/
+*.eggs/
+dist/
+build/
+*.bak
+*.swp
+
+# Virtual environment
+venv/
+env/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+
+# pytest
+.cache/
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Coverage reports
+coverage.xml
+*.cover
+*.hypothesis/
+
+# Django-specific: Ignore configuration files
+local_settings.py
+settings_local.py
+.env.local
+
+# Ignore DDD-specific folders
+# (Папки для доменов и сервисов можно игнорировать, если они содержат временные или сгенерированные файлы)
+domain_name/__pycache__/
+domain_name/migrations/
+
+# Если у вас есть папки для временных файлов, конфигурации или другие сервисы
+application_name/__pycache__/
+application_name/migrations/
+
+# JetBrains (PyCharm, IntelliJ, PhpStorm, WebStorm)
+.idea/
+
+# VSCode
+.vscode/
+
+# OSX
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
