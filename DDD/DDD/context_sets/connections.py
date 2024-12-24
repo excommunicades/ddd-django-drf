@@ -9,3 +9,9 @@ ROOT_URLCONF = 'DDD.context.urls'
 WSGI_APPLICATION = 'DDD.context.wsgi.application'
 
 STATIC_URL = 'static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
