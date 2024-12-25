@@ -1,3 +1,5 @@
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from .aggregates import UserAggregate
 from .value_objects import Email, Password
 from apps.auths.db.repositories import UserRepository
@@ -28,7 +30,20 @@ class UserService:
                         password=Password(password=password))
         try:
             user_aggregate = UserAggregate.login_user(user_entity)
-            return user_aggregate
+            
+            refresh = RefreshToken.for_user(user_aggregate.user_entity)
+
+            return {
+                "tokens": {
+                    'refresh_token': str(refresh),
+                    'access_token': str(refresh.access_token),
+                    },
+                "user": {
+                    "id": user_aggregate.user_entity.id,
+                    "username": user_aggregate.user_entity.username,
+                    "email": user_aggregate.user_entity.email
+                }
+            }
 
         except ValueError as e:
             raise ValueError(str(e))

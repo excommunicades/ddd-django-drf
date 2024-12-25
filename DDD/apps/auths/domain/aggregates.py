@@ -28,7 +28,8 @@ class UserAggregate:
     def login_user(user_entity: UserEntity):
 
         try:
-            user_entity = UserRepository.get_user_by_email(user_entity)
+            user_entity = UserRepository.login_user_by_email(user_entity)
             return UserAggregate(user_entity)
+
         except ValueError as e:
             raise e

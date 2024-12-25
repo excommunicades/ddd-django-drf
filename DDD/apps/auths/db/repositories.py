@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from apps.auths.domain.value_objects import Email, Password
+from django.contrib.auth import authenticate
 
+from apps.auths.domain.value_objects import Email, Password
 from apps.auths.domain.entities import UserEntity
 
 class UserRepository:
@@ -21,14 +22,20 @@ class UserRepository:
                     password=Password(password=user_entity.password.password))
 
     @staticmethod
-    def get_user_by_email(user_entity: UserEntity) -> UserEntity:
+    def login_user_by_email(user_entity: UserEntity) -> UserEntity:
 
         try:
-            user_entity = User.objects.get(email=str(user_entity.email))
+
+            user = User.objects.get(email=str(user_entity.email))
+
+            if not user.check_password(str(user_entity.password)):
+                raise ValueError('Wrong password.')
+
+            user_entity = user
             return user_entity
 
         except Exception as e:
-            raise ValueError('User does not exist.')
+            raise ValueError(str(e))
 
     @staticmethod
     def check_db_user(user_entity: UserEntity) -> UserEntity:

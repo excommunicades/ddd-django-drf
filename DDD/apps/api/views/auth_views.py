@@ -46,9 +46,9 @@ class LoginUser(generics.GenericAPIView):
 
             try:
 
-                user = UserService.login_user(serializer.validated_data['email'], serializer.validated_data['password'])
+                user_login_info = UserService.login_user(serializer.validated_data['email'], serializer.validated_data['password'])
 
-                return Response({"message": "you are loggined"}, status=status.HTTP_200_OK)
+                return Response(user_login_info, status=status.HTTP_200_OK)
 
             except ValueError as e:
 
