@@ -14,10 +14,21 @@ class UserService:
                         password=Password(password=password))
 
         try:
-
             user_aggregate = UserAggregate.create_user(user_entity)
             return UserRepository.create_user(user_aggregate.user_entity)
 
         except ValueError as e:
+            raise ValueError(str(e))
 
+    @staticmethod
+    def login_user(email: str, password: str):
+
+        user_entity = UserEntity(
+                        email=Email(email=email),
+                        password=Password(password=password))
+        try:
+            user_aggregate = UserAggregate.login_user(user_entity)
+            return user_aggregate
+
+        except ValueError as e:
             raise ValueError(str(e))

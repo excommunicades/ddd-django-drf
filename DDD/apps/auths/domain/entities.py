@@ -3,7 +3,7 @@ from .value_objects import Password, Email
 
 class UserEntity(BaseModel):
 
-    username: constr(min_length=3, max_length=150)
+    username: constr(min_length=3, max_length=150) = None
     email: Email
     password: Password
 

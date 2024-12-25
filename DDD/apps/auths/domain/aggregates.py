@@ -16,13 +16,19 @@ class UserAggregate:
 
         if len(user_entity.password.password) < 8:
             raise ValueError('Password must be more then 8 characters.')
-
         try:
-
             user_entity = UserRepository.check_db_user(user_entity)
 
         except ValueError as e:
-
             raise e
 
         return UserAggregate(user_entity)
+
+    @staticmethod
+    def login_user(user_entity: UserEntity):
+
+        try:
+            user_entity = UserRepository.get_user_by_email(user_entity)
+            return UserAggregate(user_entity)
+        except ValueError as e:
+            raise e

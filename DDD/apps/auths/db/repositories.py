@@ -21,8 +21,18 @@ class UserRepository:
                     password=Password(password=user_entity.password.password))
 
     @staticmethod
+    def get_user_by_email(user_entity: UserEntity) -> UserEntity:
+
+        try:
+            user_entity = User.objects.get(email=str(user_entity.email))
+            return user_entity
+
+        except Exception as e:
+            raise ValueError('User does not exist.')
+
+    @staticmethod
     def check_db_user(user_entity: UserEntity) -> UserEntity:
 
         if User.objects.filter(email=user_entity.email).first():
-            raise ValueError(f'User with this email already exist.')
+            raise ValueError('User with this email already exist.')
         return user_entity

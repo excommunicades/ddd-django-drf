@@ -4,7 +4,7 @@ from apps.auths.domain.entities import UserEntity
 from apps.auths.domain.services import UserService
 
 
-class UserSerializer(serializers.Serializer):
+class UserRegistrationSerializer(serializers.Serializer):
 
     username = serializers.CharField(max_length=150)
     email = serializers.EmailField()
@@ -19,3 +19,8 @@ class UserSerializer(serializers.Serializer):
         )
 
         return user_entity
+
+class UserLoginSerializer(serializers.Serializer):
+
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
