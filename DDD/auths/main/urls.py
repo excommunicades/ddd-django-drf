@@ -1,7 +1,7 @@
 from django.urls import path
 
 
-from apps.api.views.auth_views import (
+from api.views.auth_views import (
     RegisterUser,
     LoginUser,
 )

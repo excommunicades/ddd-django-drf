@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate
 
-from apps.auths.domain.value_objects import Email, Password
-from apps.auths.domain.entities import UserEntity
+from auths.domain.value_objects import Email, Password
+from auths.domain.entities import UserEntity
 
 class UserRepository:
 

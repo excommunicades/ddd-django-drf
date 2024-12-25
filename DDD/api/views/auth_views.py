@@ -1,8 +1,8 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 
-from apps.auths.domain.services import UserService
-from apps.api.serializers.auth_serializers import (
+from auths.domain.services import UserService
+from api.serializers.auth_serializers import (
     UserRegistrationSerializer,
     UserLoginSerializer,
 )

@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from apps.auths.domain.entities import UserEntity
+from auths.domain.entities import UserEntity
 
-from apps.auths.domain.services import UserService
+from auths.domain.services import UserService
 
 
 class UserRegistrationSerializer(serializers.Serializer):

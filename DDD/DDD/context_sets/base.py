@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-print(BASE_DIR)
+
 INSTALLED_APPS = [
 
     'rest_framework',
@@ -15,8 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'apps.products.main.apps',
-    'apps.auths.main.app_auth',
+    'products',
+    'auths',
 ]
 
 MIDDLEWARE = [

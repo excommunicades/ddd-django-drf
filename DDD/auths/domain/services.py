@@ -2,8 +2,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from .aggregates import UserAggregate
 from .value_objects import Email, Password
-from apps.auths.db.repositories import UserRepository
-from apps.auths.domain.entities import UserEntity
+from auths.db.repositories import UserRepository
+from auths.domain.entities import UserEntity
 
 class UserService:
 

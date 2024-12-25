@@ -3,7 +3,7 @@ from pydantic import ValidationError
 from django.contrib.auth.models import User
 
 from .entities import UserEntity
-from apps.auths.db.repositories import UserRepository
+from auths.db.repositories import UserRepository
 
 class UserAggregate:
 
