@@ -11,3 +11,14 @@ class ProductAgregate:
     def create_product(product_entity: ProductsEntity):
 
         return ProductAgregate(product_entity)
+
+    @staticmethod
+    def get_product_list():
+
+        return ProductAgregate(product_entity)
+
+    @staticmethod
+    def get_product_by_id(product_entity: ProductsEntity):
+
+        return ProductAgregate(product_entity)
+

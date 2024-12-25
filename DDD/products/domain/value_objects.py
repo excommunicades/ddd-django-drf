@@ -1,5 +1,13 @@
 from pydantic import BaseModel
 
+class Id(BaseModel):
+
+    id: int = None
+
+    def __str__(self):
+
+        return self.id
+
 class Owner(BaseModel):
 
     owner: any

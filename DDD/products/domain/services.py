@@ -15,3 +15,31 @@ class ProductsService:
         product_aggregate = ProductAgregate.create_product(product_entity)
 
         return ProductsRepository.create_product(product_aggregate.product_entity)
+
+    @staticmethod
+    def get_product_list():
+
+        products = ProductsRepository.get_product_list()
+
+        return [
+            {
+                'id': product.id.id,
+                'owner': str(product.owner.owner),
+                'title': str(product.title.title),
+                'description': str(product.description.description)
+            }
+            for product in products
+        ]
+
+    @staticmethod
+    def get_product_by_id(id: int):
+
+        product_entity = ProductsRepository.get_product_by_id(id)
+        product_aggregate = ProductAgregate.get_product_by_id(product_entity)
+
+        return {
+            'id': product_aggregate.product_entity.id,
+            'owner': product_aggregate.product_entity.owner.username,
+            'title': product_aggregate.product_entity.title,
+            'description': product_aggregate.product_entity.description
+        }
