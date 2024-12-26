@@ -22,3 +22,12 @@ class ProductAgregate:
 
         return ProductAgregate(product_entity)
 
+    @staticmethod
+    def update_product(product_entity: ProductsEntity):
+
+        return ProductAgregate(product_entity)
+
+    @staticmethod
+    def delete_product(product_entity: ProductsEntity):
+
+        return ProductAgregate(product_entity)

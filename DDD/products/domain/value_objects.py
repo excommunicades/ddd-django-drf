@@ -6,9 +6,11 @@ class Id(BaseModel):
 
     def __str__(self):
 
-        return self.id
+        return str(self.id)
 
 class Owner(BaseModel):
+
+    '''Owner of product | Owner of update/delete request'''
 
     owner: any
 
@@ -29,7 +31,7 @@ class Title(BaseModel):
 
 class Description(BaseModel):
 
-    description: str
+    description: str | None = None
 
     def __str__(self):
 

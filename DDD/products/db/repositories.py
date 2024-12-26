@@ -22,11 +22,6 @@ class ProductsRepository:
             description=Description(description=product.description),)
 
     @staticmethod
-    def get_user_by_id(id: int) -> ProductsEntity:
-
-        return User.objects.filter(id=id).first()
-
-    @staticmethod
     def get_product_list() -> List[ProductsEntity]:
 
         product_list = Products.objects.all()
@@ -56,13 +51,35 @@ class ProductsRepository:
     def update_product(product_entity: ProductsEntity) -> ProductsEntity:
 
         try:
-            product = Products.objects.get(id=id)
+            product = Products.objects.get(id=int(product_entity.id.id))
+
+            if product.owner != product_entity.owner.owner:
+                raise ValueError("You must to be an owner of this product for update operation.")
 
         except Exception as e:
             raise ValueError(str(e))
 
         product.title = product_entity.title.title
-        product.description = product_entity.description.description
+
+        if product_entity.description.description:
+            product.description = product_entity.description.description
+
         product.save()
 
         return product
+
+    @staticmethod
+    def delete_product(id: int, request_user_id: int) -> ProductsEntity:
+
+        try:
+            product_entity = Products.objects.get(id=id)
+
+            if product_entity.owner.id != request_user_id:
+                raise ValueError("You must to be an owner of this product for update operation.")
+
+            product_entity.delete()
+
+        except Exception as e:
+            raise ValueError(str(e))
+
+        return product_entity
