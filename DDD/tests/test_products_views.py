@@ -13,7 +13,7 @@ def register_user(client):
         "password": "password1%"
     }
 
-    response = client.post(
+    response = client.post( # register user
         url_register,
         user_data,
         format='json'
@@ -32,7 +32,7 @@ def register_another_user(client):
         "password": "password1%"
     }
 
-    response = client.post(
+    response = client.post( # register user
         url_register,
         user_data,
         format='json'
@@ -50,7 +50,7 @@ def obtain_token(client, register_user):
         "password": register_user["password"]
     }
 
-    response = client.post(
+    response = client.post( # login user
         url_login,
         login_data,
         format='json'
@@ -75,7 +75,7 @@ def obtain_second_token(client, register_another_user):
         "password": register_another_user["password"]
     }
 
-    response = client.post(
+    response = client.post( # login user
         url_login,
         login_data,
         format='json'
@@ -98,7 +98,7 @@ def test_product_creation(client, obtain_token):
     url_create_product = '/products/create'
     headers = {'Authorization': f'Bearer {access_token}'}
 
-    response = client.post(
+    response = client.post( # failure create product, with unauthorize user
         url_create_product,
         {'title': 'test_title','description': 'test_description'},
         format='json',
@@ -106,7 +106,7 @@ def test_product_creation(client, obtain_token):
 
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
-    response = client.post(
+    response = client.post( # success create product
         url_create_product,
         {'title': 'test_title','description': 'test_description'},
         format='json',
@@ -118,7 +118,7 @@ def test_product_creation(client, obtain_token):
     assert response.data.get('title') == 'test_title'
     assert response.data.get('description') == 'test_description'
 
-    response = client.post(
+    response = client.post( # success create product without descriotion
         url_create_product,
         {'title': 'test_title'},
         format='json',
@@ -130,7 +130,7 @@ def test_product_creation(client, obtain_token):
     assert response.data.get('title') == 'test_title'
     assert response.data.get('description') == None
 
-    response = client.post(
+    response = client.post( # failure create product without any fields
         url_create_product,
         {},
         format='json',
@@ -146,7 +146,7 @@ def create_product(client, obtain_token):
     url_create_product = '/products/create'
     headers = {'Authorization': f'Bearer {access_token}'}
 
-    response = client.post(
+    response = client.post( # create product
         url_create_product,
         {'title': 'test_title','description': 'test_description'},
         format='json',
@@ -160,7 +160,7 @@ def test_product_list_returning(client, obtain_token, create_product):
 
     access_token = obtain_token
 
-    response = client.get(
+    response = client.get( # take product list
         path='/products/all',
         format='json',
         headers={'Authorization': f'Bearer {access_token}'}
@@ -176,14 +176,14 @@ def test_product_returning(client, obtain_token, create_product):
 
     access_token = obtain_token
 
-    response = client.get(
+    response = client.get( # failure take non-existent product
         path='/products/1000',
         format='json',
         headers={'Authorization': f'Bearer {access_token}'}
     )
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
-    response = client.get(
+    response = client.get( # success take product by id
         path='/products/4',
         format='json',
         headers={'Authorization': f'Bearer {access_token}'}
@@ -198,7 +198,7 @@ def test_product_updates(client, obtain_token, obtain_second_token,  create_prod
     access_token = obtain_token
     access_token2 = obtain_second_token
 
-    response = client.get(
+    response = client.get( # success take product
         path='/products/5',
         format='json',
         headers={'Authorization': f'Bearer {access_token}'}
@@ -208,7 +208,7 @@ def test_product_updates(client, obtain_token, obtain_second_token,  create_prod
 
     assert response.data == {'description': 'test_description', 'id':5, 'owner': 'testuser', 'title': 'test_title'}
 
-    response = client.patch(
+    response = client.patch( # success update product
         path='/products/5',
         data={'title': 'updated_title', 'description': 'updated_description'},
         content_type='application/json',
@@ -217,7 +217,7 @@ def test_product_updates(client, obtain_token, obtain_second_token,  create_prod
     assert response.status_code == status.HTTP_200_OK
     assert response.data == {'title': 'updated_title', 'description': 'updated_description'}
 
-    response = client.patch(
+    response = client.patch( # success update title of product 
         path='/products/5',
         data={'title': 'updated_title2'},
         content_type='application/json',
@@ -227,7 +227,7 @@ def test_product_updates(client, obtain_token, obtain_second_token,  create_prod
     assert response.status_code == status.HTTP_200_OK
     assert response.data == {'title': 'updated_title2', 'description': 'updated_description'}
 
-    response = client.patch(
+    response = client.patch( # failure update product without fields
         path='/products/5',
         data={},
         content_type='application/json',
@@ -236,7 +236,7 @@ def test_product_updates(client, obtain_token, obtain_second_token,  create_prod
 
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
-    response = client.patch(
+    response = client.patch( # failure update non-existent product
         path='/products/5124',
         data={'title': 'updated_title2'},
         content_type='application/json',
@@ -245,7 +245,7 @@ def test_product_updates(client, obtain_token, obtain_second_token,  create_prod
 
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
-    response = client.patch(
+    response = client.patch( # failure update product without permissions
         path='/products/5',
         data={'title': 'updated_title', 'description': 'updated_description'},
         content_type='application/json',
@@ -261,7 +261,7 @@ def test_product_delete(client, obtain_token, obtain_second_token,  create_produ
     access_token = obtain_token
     access_token2 = obtain_second_token
 
-    response = client.delete(
+    response = client.delete( # failure delete product without permissions
         path='/products/6',
         content_type='json',
         headers={'Authorization': f'Bearer {access_token2}'}
@@ -270,7 +270,7 @@ def test_product_delete(client, obtain_token, obtain_second_token,  create_produ
     assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
-    response = client.delete(
+    response = client.delete( # success delete product
         path='/products/6',
         content_type='json',
         headers={'Authorization': f'Bearer {access_token}'}
@@ -279,7 +279,7 @@ def test_product_delete(client, obtain_token, obtain_second_token,  create_produ
     assert response.status_code == status.HTTP_204_NO_CONTENT
     assert response.data == {"message": "Product with id: 6 was deleted successfully!"}
 
-    response = client.delete(
+    response = client.delete( # failure delete non-existent product
         path='/products/1000',
         content_type='json',
         headers={'Authorization': f'Bearer {access_token}'}
