@@ -22,8 +22,11 @@ class ProductAPIView(generics.GenericAPIView):
                 title=serializer.validated_data['title'],
                 description=serializer.validated_data.get('description', None),
             )
-
-            return Response(status=status.HTTP_201_CREATED, data={"message": "Created successfully!"})
+            return Response(status=status.HTTP_201_CREATED, data=
+                                                                {
+                                                                    'title': product_entity.title.title,
+                                                                    'description': product_entity.description.description
+                                                                })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, *args, **kwargs):
@@ -58,25 +61,37 @@ class ProductAPIView(generics.GenericAPIView):
                 )
 
             except Exception as e:
+
+                if str(e) == 'You must to be an owner of this product for update operation.':
+                    return Response({"erorrs": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
                 return Response({"erorrs": str(e)}, status=status.HTTP_404_NOT_FOUND)
 
-            return Response(status=status.HTTP_201_CREATED, data={"message": "Updated successfully!"})
+            return Response(status=status.HTTP_200_OK, data=
+                                                            {
+                                                                'title': product_entity.title,
+                                                                'description': product_entity.description
+                                                            })
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, *args, **kwargs):
 
-        serializer = self.get_serializer(data=request.data)
+        # serializer = self.get_serializer(data=request.data)
         product_id = self.kwargs.get('product_id')
 
-        if serializer.is_valid():
+        # if serializer.is_valid():
 
-            try:
-                product_entity = ProductsService.delete_product(id=int(product_id), request_user_id=int(self.request.user.id))
+        try:
+            product_entity = ProductsService.delete_product(id=int(product_id), request_user_id=int(self.request.user.id))
 
-            except Exception as e:
-                return Response({"erorrs": str(e)}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
 
-            return Response(status=status.HTTP_201_CREATED, data={"message": "Deleted successfully!"})
+            if str(e) == 'You must to be an owner of this product for update operation.':
+                return Response({"erorrs": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"erorrs": str(e)}, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_204_NO_CONTENT, data={"message": f"Product with id: {int(product_id)} was deleted successfully!"})
+
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
