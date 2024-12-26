@@ -4,11 +4,6 @@ from rest_framework.permissions import IsAuthenticated
 
 from api.serializers.products_serializers import ProductSerializer
 from products.domain.services import ProductsService
-#TODO: Full CRUD for products 
-#TODO: Validation for crud owner to products
-#TODO: Write tests for products
-#TODO: Think about pydantic value objects by serializer
-
 
 
 class ProductAPIView(generics.GenericAPIView):

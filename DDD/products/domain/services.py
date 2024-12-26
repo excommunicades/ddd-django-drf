@@ -1,6 +1,6 @@
 from products.db.repositories import ProductsRepository
-from .entities import ProductsEntity
-from .aggregates import ProductAgregate
+from .entities import ProductEntity
+from .aggregates import ProductAggregate
 from .value_objects import Id, Owner, Title, Description
 
 class ProductsService:
@@ -8,12 +8,12 @@ class ProductsService:
     @staticmethod
     def create_product(owner: any, title: str, description: str):
 
-        product_entity = ProductsEntity(
+        product_entity = ProductEntity(
                             owner=Owner(owner=owner),
                             title=Title(title=title),
                             description=Description(description=description))
 
-        product_aggregate = ProductAgregate.create_product(product_entity)
+        product_aggregate = ProductAggregate.create_product(product_entity)
 
         return ProductsRepository.create_product(product_aggregate.product_entity)
 
@@ -36,7 +36,7 @@ class ProductsService:
     def get_product_by_id(id: int):
 
         product_entity = ProductsRepository.get_product_by_id(id)
-        product_aggregate = ProductAgregate.get_product_by_id(product_entity)
+        product_aggregate = ProductAggregate.get_product_by_id(product_entity)
 
         return {
             'id': product_aggregate.product_entity.id,
@@ -48,13 +48,13 @@ class ProductsService:
     @staticmethod
     def udpate_product(id: int, owner:any,  title: str, description: str | None):
 
-        product_entity = ProductsEntity(
+        product_entity = ProductEntity(
                             id=Id(id=id),
                             owner=Owner(owner=owner),
                             title=Title(title=title),
                             description=Description(description=description))
 
-        product_aggregate = ProductAgregate.update_product(product_entity)
+        product_aggregate = ProductAggregate.update_product(product_entity)
 
         return ProductsRepository.update_product(product_aggregate.product_entity)
 

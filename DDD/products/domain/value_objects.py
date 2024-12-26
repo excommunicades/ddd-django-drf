@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class Id(BaseModel):
 
-    id: int = None
+    id: int = Field(...)
 
     def __str__(self):
 
@@ -15,11 +15,10 @@ class Owner(BaseModel):
     owner: any
 
     class Config:
-            arbitrary_types_allowed = True
+        arbitrary_types_allowed = True
 
     def __str__(self):
-
-        return self.owner
+        return str(self.owner)
 
 class Title(BaseModel):
 

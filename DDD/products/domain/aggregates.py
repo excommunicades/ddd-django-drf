@@ -1,33 +1,35 @@
-from .entities import ProductsEntity
+from .entities import ProductEntity
 from products.db.repositories import ProductsRepository
 
-class ProductAgregate:
+#TODO: Add some business logic, business rule
 
-    def __init__(self, product_entity: ProductsEntity):
+class ProductAggregate:
+
+    def __init__(self, product_entity: ProductEntity):
 
         self.product_entity = product_entity
 
     @staticmethod
-    def create_product(product_entity: ProductsEntity):
+    def create_product(product_entity: ProductEntity):
 
-        return ProductAgregate(product_entity)
+        return ProductAggregate(product_entity)
 
     @staticmethod
     def get_product_list():
 
-        return ProductAgregate(product_entity)
+        return ProductAggregate(product_entity)
 
     @staticmethod
-    def get_product_by_id(product_entity: ProductsEntity):
+    def get_product_by_id(product_entity: ProductEntity):
 
-        return ProductAgregate(product_entity)
-
-    @staticmethod
-    def update_product(product_entity: ProductsEntity):
-
-        return ProductAgregate(product_entity)
+        return ProductAggregate(product_entity)
 
     @staticmethod
-    def delete_product(product_entity: ProductsEntity):
+    def update_product(product_entity: ProductEntity):
 
-        return ProductAgregate(product_entity)
+        return ProductAggregate(product_entity)
+
+    @staticmethod
+    def delete_product(product_entity: ProductEntity):
+
+        return ProductAggregate(product_entity)
